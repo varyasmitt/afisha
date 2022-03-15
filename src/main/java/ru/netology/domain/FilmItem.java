@@ -1,15 +1,14 @@
 package ru.netology.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 
 public class FilmItem {
     private int id;
-    private int filmPrise;
-    private String filmName;
+    private String name;
+    private String genre;
+
+    public FilmItem(int id, String name, String genre) {
+        this.id = id;
+        this.name = name;
+        this.genre = genre;
+    }
 }

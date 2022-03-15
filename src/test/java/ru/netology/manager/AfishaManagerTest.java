@@ -7,76 +7,88 @@ import ru.netology.domain.FilmItem;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AfishaManagerTest {
-    // AfishaRepository repository = new AfishaRepository();
-    AfishaManager manager = new AfishaManager(5);
+    private AfishaManager service = new AfishaManager();
+    private FilmItem film1 = new FilmItem(1, "Бладшот", "боевик");
+    private FilmItem film2 = new FilmItem(2, "Вперёд", "мультфильм");
+    private FilmItem film3 = new FilmItem(3, "Белград", "комедия");
+    private FilmItem film4 = new FilmItem(4, "Джентельмены", "боевик");
+    private FilmItem film5 = new FilmItem(5, "Человек-невидимка", "ужасы");
+    private FilmItem film6 = new FilmItem(6, "Тролли. Мировой тур", "мультфильм");
+    private FilmItem film7 = new FilmItem(7, "Номер один", "комедия");
+    private FilmItem film8 = new FilmItem(8, "Ледниковый период", "мультфильм");
+    private FilmItem film9 = new FilmItem(9, "Форсаж", "Боевик");
+    private FilmItem film10 = new FilmItem(10, "Маски-шоу", "комедия");
+    private FilmItem film11 = new FilmItem(11, "Java", "ужасы");
+    private FilmItem film12 = new FilmItem(12, "JavaScript", "Хоррор");
 
-    private final FilmItem first = new FilmItem(
-            1, 300, "first");
-    private final FilmItem second = new FilmItem(
-            2, 250, "second");
-    private final FilmItem third = new FilmItem(
-            3, 550, "third");
-    private final FilmItem four = new FilmItem(
-            4, 300, "four");
-    private final FilmItem five = new FilmItem(
-            5, 250, "five");
-    private final FilmItem six = new FilmItem(
-            6, 550, "six");
-    private final FilmItem seven = new FilmItem(
-            7, 300, "seven");
-    private final FilmItem eight = new FilmItem(
-            8, 250, "eight");
-    private final FilmItem nine = new FilmItem(
-            9, 550, "nine");
-    private final FilmItem ten = new FilmItem(
-            10, 300, "ten");
-    private final FilmItem eleven = new FilmItem(
-            11, 250, "eleven");
-    private final FilmItem twelve = new FilmItem(
-            12, 550, "twelve");
-
-    @BeforeEach
-    void prepareManager() {
-        manager.addFilm(first);
-        manager.addFilm(second);
-        manager.addFilm(third);
-        manager.addFilm(four);
-        manager.addFilm(five);
-        manager.addFilm(six);
-        manager.addFilm(seven);
-        manager.addFilm(eight);
-        manager.addFilm(nine);
-        manager.addFilm(ten);
-        manager.addFilm(eleven);
-        manager.addFilm(twelve);
+    @Test
+    void add() {
+        FilmItem[] expected = {film1, film2, film3, film4, film5, film6, film7, film8, film9, film10};
+        service.add(film1);
+        service.add(film2);
+        service.add(film3);
+        service.add(film4);
+        service.add(film5);
+        service.add(film6);
+        service.add(film7);
+        service.add(film8);
+        service.add(film9);
+        service.add(film10);
+        assertArrayEquals(expected, service.findAll());
     }
 
     @Test
-    public void shouldSave() {
-        manager.addFilm(first);
-        FilmItem[] expected = new FilmItem[]{
-                first,
-                twelve,
-                eleven,
-                ten,
-                nine
-        };
-        FilmItem[] actual = manager.getItems();
-
-        assertArrayEquals(expected, actual);
+    void shouldFindLast() {
+        AfishaManager afishaManager = new AfishaManager();
+        FilmItem[] expected = {film10, film9, film8, film7, film6, film5, film4, film3, film2, film1};
+        afishaManager.add(film1);
+        afishaManager.add(film2);
+        afishaManager.add(film3);
+        afishaManager.add(film4);
+        afishaManager.add(film5);
+        afishaManager.add(film6);
+        afishaManager.add(film7);
+        afishaManager.add(film8);
+        afishaManager.add(film9);
+        afishaManager.add(film10);
+        assertArrayEquals(expected, afishaManager.findLast());
     }
 
     @Test
-    public void shouldGetAll() {
-        FilmItem[] actual = manager.getItems();
-        FilmItem[] expected = {
-                twelve,
-                eleven,
-                ten,
-                nine,
-                eight
-        };
-        assertArrayEquals(expected, actual);
+    void shouldLastIfLimitDefault() {
+        AfishaManager afishaManager = new AfishaManager();
+        FilmItem[] expected = {film12, film11, film10, film9, film8, film7, film6, film5, film4, film3};
+        afishaManager.add(film1);
+        afishaManager.add(film2);
+        afishaManager.add(film3);
+        afishaManager.add(film4);
+        afishaManager.add(film5);
+        afishaManager.add(film6);
+        afishaManager.add(film7);
+        afishaManager.add(film8);
+        afishaManager.add(film9);
+        afishaManager.add(film10);
+        afishaManager.add(film11);
+        afishaManager.add(film12);
+        assertArrayEquals(expected, afishaManager.findLast());
     }
 
+    @Test
+    void shouldLastIfEnterLimit() {
+        AfishaManager afishaManager = new AfishaManager(5);
+        FilmItem[] expected = {film12, film11, film10, film9, film8};
+        afishaManager.add(film1);
+        afishaManager.add(film2);
+        afishaManager.add(film3);
+        afishaManager.add(film4);
+        afishaManager.add(film5);
+        afishaManager.add(film6);
+        afishaManager.add(film7);
+        afishaManager.add(film8);
+        afishaManager.add(film9);
+        afishaManager.add(film10);
+        afishaManager.add(film11);
+        afishaManager.add(film12);
+        assertArrayEquals(expected, afishaManager.findLast());
+    }
 }
